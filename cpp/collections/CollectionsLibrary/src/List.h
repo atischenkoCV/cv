@@ -8,6 +8,8 @@
 #ifndef LIST_H_
 #define LIST_H_
 
+#include <string>
+
 namespace ticher777 {
 
 	// TODO[t7]: I suppose it must be already calculated in std
@@ -88,15 +90,26 @@ namespace ticher777 {
 			 */
 
 			void checkAddIndex(int index) const {
-				if (index < 0 || index > this->size() || index == MAX_LIST_SIZE) {
-					throw "index is out of range";
+				if (index < 0 || index > this->size()) {
+					throw getIndexErrorMessage(index, this->size(), "add");
+				}
+				if (index == MAX_LIST_SIZE) {
+					throw "List is full-filled.";
 				}
 			}
 
 			void checkGetIndex(int index) const {
 				if (index < 0 || index > size() - 1) {
-					throw "index is out of range";
+					throw getIndexErrorMessage(index, size() - 1, "get");
 				}
+			}
+
+			std::string getIndexErrorMessage(int index, int upperBountd, const std::string& method) const {
+				std::string error;
+				error.assign("Index ").append(std::to_string(index))
+						.append(" is out of range for '").append(method).append("' operation.")
+						.append(" Valid range: [0, ").append(std::to_string(upperBountd)).append("]");
+				return error;
 			}
 	};
 
