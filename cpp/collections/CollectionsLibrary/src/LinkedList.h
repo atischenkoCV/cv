@@ -10,49 +10,64 @@
 
 #include "List.h"
 
-namespace ticher777 {
+namespace ticher777
+{
 
-	class LinkedList: public List {
-		public:
-			LinkedList();
+  class LinkedList : public List
+  {
+  public:
+    LinkedList ();
 
-			virtual ~LinkedList();
+    virtual
+    ~LinkedList ();
 
-			virtual int size() const override {
-				return listSize;
-			}
-		protected:
-			struct LinkedNode {
-					int value;
-					LinkedNode *next;
-					LinkedNode *prev;
-			};
+    virtual int
+    size () const override
+    {
+      return listSize;
+    }
+  protected:
+    struct LinkedNode
+    {
+      int value;
+      LinkedNode *next;
+      LinkedNode *prev;
+    };
 
-			int doGet(int index) const override {
-				return doGetNode(index)->value;
-			}
+    int
+    doGet (int index) const override
+    {
+      return doGetNode (index)->value;
+    }
 
-			void doAdd(int index, int value) override;
+    void
+    doAdd (int index, int value) override;
 
-			int doRemove(int index) override;
+    int
+    doRemove (int index) override;
 
-			LinkedNode* doGetNode(int index) const;
+    LinkedNode*
+    doGetNode (int index) const;
 
-			void linkNodes(LinkedNode* prev, LinkedNode* next) const {
-				if (prev != nullptr) {
-					prev->next = next;
-				}
-				if (next != nullptr) {
-					next->prev = prev;
-				}
-			}
-			;
-		private:
+    void
+    linkNodes (LinkedNode* prev, LinkedNode* next) const
+    {
+      if (prev != nullptr)
+	{
+	  prev->next = next;
+	}
+      if (next != nullptr)
+	{
+	  next->prev = prev;
+	}
+    }
+    ;
+  private:
 
-			LinkedNode *head;
-			LinkedNode *tail;
-			int listSize;
-	};
+    LinkedNode *head;
+    LinkedNode *tail;
+    int listSize;
+  };
 
 } /* namespace ticher777 */
 
