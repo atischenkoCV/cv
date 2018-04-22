@@ -14,7 +14,7 @@
 
 TEST_CASE( "LinkedList#add" , "[LinkedList]")
 {
-  ticher777::LinkedList list;
+  ticher777::LinkedList<int> list;
   REQUIRE(list.size () == 0);
 
   // TODO[ECLIPSE-bug]: WRONG FORMATTING
@@ -52,7 +52,7 @@ TEST_CASE( "LinkedList#add" , "[LinkedList]")
 
 TEST_CASE( "LinkedList#get" , "[LinkedList]")
 {
-  ticher777::LinkedList list;
+  ticher777::LinkedList<double> list;
   REQUIRE(list.size () == 0);
 
   SECTION( "Check getting for a random index"){
@@ -83,7 +83,7 @@ TEST_CASE( "LinkedList#get" , "[LinkedList]")
 
 TEST_CASE( "LinkedList#remove" , "[LinkedList]" )
 {
-  ticher777::LinkedList list;
+  ticher777::LinkedList<int> list;
   REQUIRE(list.size () == 0);
 
   SECTION( "Check removing the last element in the list" ){
@@ -138,5 +138,21 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" )
   list.add(listValue);
   REQUIRE(list.remove(0) == listValue);
 }
+}
+
+TEST_CASE( "LinkedList templates" , "[LinkedList]" )
+{
+
+  SECTION( "Check using pointers as template" ){
+  ticher777::LinkedList<int *> list;
+
+  int i[20];
+  list.add(i);
+  REQUIRE(list.size() == 1);
+
+  i[4] = 30;
+  REQUIRE(list.get(0)[4] == 30);
+}
+
 }
 
