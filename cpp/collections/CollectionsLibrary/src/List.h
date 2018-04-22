@@ -22,6 +22,7 @@ namespace ticher777
    *
    * Simple class to store list of int values
    */
+  template<typename ListType>
   class List
   {
   public:
@@ -37,7 +38,7 @@ namespace ticher777
      *
      * Index must be greater or equal zero and lower or equal the list's size, in other cases will be thrown exception.
      */
-    virtual int
+    virtual ListType
     get (int index) const
     {
       checkIndex (0, size () - 1, index, "get");
@@ -51,7 +52,7 @@ namespace ticher777
      * Also exception will be thrown if the list is already full filled.
      */
     virtual void
-    add (int index, int value)
+    add (int index, ListType value)
     {
       checkAddIndex (index);
       doAdd (index, value);
@@ -63,7 +64,7 @@ namespace ticher777
      * Exception will be thrown if the list is already full filled.
      */
     virtual void
-    add (int value)
+    add (ListType value)
     {
       checkAddIndex (size ());
       doAdd (size (), value);
@@ -73,7 +74,7 @@ namespace ticher777
      *
      * Index must be greater or equal zero and lower or equal the list's size, in other cases will be thrown exception.
      */
-    virtual int
+    virtual ListType
     remove (int index)
     {
       checkIndex (0, size () - 1, index, "remove");
@@ -84,19 +85,19 @@ namespace ticher777
     /**
      * Safe get value. Index is not out of the allowed range
      */
-    virtual int
+    virtual ListType
     doGet (int index) const = 0;
 
     /**
      * Safe add method. Index is not out of the allowed range.
      */
     virtual void
-    doAdd (int index, int value) = 0;
+    doAdd (int index, ListType value) = 0;
 
     /**
      * Safe remove method. Index is not out of the allowed range.
      */
-    virtual int
+    virtual ListType
     doRemove (int index) = 0;
 
     /**
