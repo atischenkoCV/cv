@@ -35,7 +35,7 @@ namespace ticher777 {
 			 * Index must be greater or equal zero and lower or equal the list's size, in other cases will be thrown exception.
 			 */
 			virtual int get(int index) const {
-				checkGetIndex(index);
+				checkIndex(0, size() - 1, index, "get");
 				return doGet(index);
 			}
 
@@ -65,7 +65,7 @@ namespace ticher777 {
 			 * Index must be greater or equal zero and lower or equal the list's size, in other cases will be thrown exception.
 			 */
 			virtual int remove(int index) {
-				checkGetIndex(index);
+				checkIndex(0, size() - 1, index, "remove");
 				return doRemove(index);
 			}
 		protected:
@@ -90,25 +90,23 @@ namespace ticher777 {
 			 */
 
 			void checkAddIndex(int index) const {
-				if (index < 0 || index > this->size()) {
-					throw getIndexErrorMessage(index, this->size(), "add");
-				}
+				checkIndex(0, size(), index, "add");
 				if (index == MAX_LIST_SIZE) {
 					throw "List is full-filled.";
 				}
 			}
 
-			void checkGetIndex(int index) const {
-				if (index < 0 || index > size() - 1) {
-					throw getIndexErrorMessage(index, size() - 1, "get");
+			void checkIndex(int lowerBound, int upperBound, int index, const std::string& method) const {
+				if (index < lowerBound || index > upperBound) {
+					throw getIndexErrorMessage(lowerBound, upperBound, index, method);
 				}
 			}
 
-			std::string getIndexErrorMessage(int index, int upperBountd, const std::string& method) const {
+			const std::string getIndexErrorMessage(int lowerBound, int upperBound, int index, const std::string& method) const {
 				std::string error;
 				error.assign("Index ").append(std::to_string(index))
 						.append(" is out of range for '").append(method).append("' operation.")
-						.append(" Valid range: [0, ").append(std::to_string(upperBountd)).append("]");
+						.append(" Valid range: [").append(std::to_string(lowerBound)).append(", ").append(std::to_string(upperBound)).append("]");
 				return error;
 			}
 	};
