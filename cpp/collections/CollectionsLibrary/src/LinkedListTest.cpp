@@ -16,13 +16,13 @@ TEST_CASE( "LinkedList#add" , "[LinkedList]") {
 	ticher777::LinkedList list;
 	REQUIRE(list.size() == 0);
 
-	SECTION("Add in empty list"){
+	SECTION("Check adding in empty list"){
 	list.add(0);
 
 	REQUIRE( list.size() == 1);
 }
 
-	SECTION( "Add in full-filled list"){
+	SECTION( "Check adding in full-filled list"){
 	for (int i = 0; i < MAX_LIST_SIZE; i++) {
 		list.add(i);
 	}
@@ -30,13 +30,13 @@ TEST_CASE( "LinkedList#add" , "[LinkedList]") {
 
 	REQUIRE_THROWS_WITH(list.add(-1), "List is full-filled.");
 }
-	SECTION( "Add out of range" ){
+	SECTION( "Check bound indexes for 'add' method" ){
 	REQUIRE_THROWS_WITH(list.add(10, -1), "Index 10 is out of range for 'add' operation. Valid range: [0, 0]");
 	list.add(11);
 	REQUIRE_THROWS_WITH(list.add(-1, 20), "Index -1 is out of range for 'add' operation. Valid range: [0, 1]");
 }
 
-	SECTION( "Add random values"){
+	SECTION( "Check adding random values to list"){
 	srand (time(nullptr));
 
 	for (int i = 0; i < 200; i++) {
@@ -50,7 +50,7 @@ TEST_CASE( "LinkedList#get" , "[LinkedList]") {
 	ticher777::LinkedList list;
 	REQUIRE(list.size() == 0);
 
-	SECTION( "Get random"){
+	SECTION( "Check getting for a random index"){
 	srand (time(nullptr));
 	int listSize = 200;
 
@@ -62,7 +62,7 @@ TEST_CASE( "LinkedList#get" , "[LinkedList]") {
 	}
 
 }
-	SECTION( "Get bound indexes"){
+	SECTION( "Check bound indexes for 'get' method"){
 	int listSize = 200;
 	for (int i = 0; i < listSize; i++) {
 		list.add(i);
@@ -77,7 +77,7 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" ) {
 	ticher777::LinkedList list;
 	REQUIRE(list.size() == 0);
 
-	SECTION( "Check remove the last element in the list" ){
+	SECTION( "Check removing the last element in the list" ){
 	int listSize = 200;
 
 	for (int i = 0; i < listSize; i++) {
@@ -90,7 +90,7 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" ) {
 	REQUIRE(list.size() == 0);
 
 }
-	SECTION( "Check remove the first element in the list" ){
+	SECTION( "Check removing the first element in the list" ){
 	int listSize = 200;
 
 	for (int i = 0; i < listSize; i++) {
@@ -103,7 +103,7 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" ) {
 	REQUIRE(list.size() == 0);
 }
 
-	SECTION( "Check bound indexes for remove" ){
+	SECTION( "Check bound indexes for remove method" ){
 	int listSize = 200;
 	for (int i = 0; i < listSize; i++) {
 		list.add(i);
@@ -119,7 +119,7 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" ) {
 	REQUIRE_THROWS_WITH(list.remove(1000), "Index 1000 is out of range for 'remove' operation. Valid range: [0, 197]");
 }
 
-	SECTION( "Check return value of remove method" ){
+	SECTION( "Check return value of 'remove' method" ){
 	int listValue = 222888;
 	list.add(listValue);
 	REQUIRE(list.remove(0) == listValue);
