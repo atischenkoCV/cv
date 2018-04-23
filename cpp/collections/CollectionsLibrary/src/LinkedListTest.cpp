@@ -156,3 +156,35 @@ TEST_CASE( "LinkedList templates" , "[LinkedList]" )
 
 }
 
+TEST_CASE( "LinkedList Iterator" , "[LinkedList]" )
+{
+  ticher777::LinkedList<int> list;
+
+  SECTION( "Check iterator" ){
+
+  list.add(1);
+  list.add(4);
+  list.add(-200);
+
+  ticher777::LinkedListIterator<int> iterator = list.iterator();
+
+  REQUIRE(iterator.hasNext());
+  REQUIRE(iterator.next() == 1);
+
+  REQUIRE(iterator.hasNext());
+  REQUIRE(iterator.next() == 4);
+
+  REQUIRE(iterator.hasNext());
+  REQUIRE(iterator.next() == -200);
+
+  REQUIRE(!iterator.hasNext());
+}
+
+  SECTION( " Check empty iterator " ) {
+    ticher777::LinkedListIterator<int> iterator = list.iterator();
+    REQUIRE(!iterator.hasNext());
+    REQUIRE(!iterator.next());
+
+  }
+
+}

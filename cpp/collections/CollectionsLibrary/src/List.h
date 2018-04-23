@@ -16,13 +16,28 @@ namespace ticher777
   // TODO[t7]: I suppose it must be already calculated in std
 #define MAX_LIST_SIZE 32767
 
-  // TODO[T7]: list shouldn't be int-typed. it should be rewritten with template using
+  template<typename IteratorType>
+  class Iterator {
+  public:
+    /**
+     * Return true if one more value is available
+     */
+    virtual bool hasNext() const = 0;
+
+    /**
+     * Select and return next value in iterator
+     *
+     * Undefined behaviour if iterator is empty
+     */
+    virtual IteratorType next() = 0;
+  };
+
   /**
    * Interface of list class.
    *
    * Simple class to store list of int values
    */
-  template<typename ListType>
+  template<typename ListType, typename ListIterator>
   class List
   {
   public:
@@ -80,6 +95,8 @@ namespace ticher777
       checkIndex (0, size () - 1, index, "remove");
       return doRemove (index);
     }
+
+    virtual ListIterator iterator() const = 0;
   protected:
 
     /**

@@ -13,9 +13,61 @@
 namespace ticher777
 {
 
-  template<typename LinkedListType>
-    class LinkedList : public List<LinkedListType>
+  /**
+   * Simple class to describe LinkedList node. It has two pointers for previous and next nodes. And it contains values stored value
+   */
+  template<typename LinkedNodeType>
+    class LinkedNode
     {
+    public:
+      LinkedNodeType value;
+      LinkedNode *next;
+      LinkedNode *prev;
+    };
+
+  /**
+   * LinkedList iterator walk through head LinkedNode to chain's tail.
+   */
+  template<typename LinkedListIteratorType>
+    class LinkedListIterator : public ticher777::Iterator<LinkedListIteratorType>
+    {
+    public:
+      LinkedListIterator (LinkedNode<LinkedListIteratorType>* head)
+      {
+	iteratorHead = new LinkedNode<LinkedListIteratorType>();
+	iteratorHead->next = head;
+	currentPosition = iteratorHead;
+      }
+      ;
+      ~LinkedListIterator ()
+      {
+	currentPosition = nullptr;
+      }
+      virtual bool
+      hasNext () const override
+      {
+	return currentPosition != nullptr && currentPosition->next != nullptr;
+      }
+      ;
+      virtual LinkedListIteratorType
+      next () override
+      {
+	if (hasNext ())
+	  {
+	    currentPosition = currentPosition->next;
+	  }
+	return currentPosition->value;
+      }
+      ;
+    private:
+      LinkedNode<LinkedListIteratorType>* currentPosition;
+      LinkedNode<LinkedListIteratorType>* iteratorHead;
+    };
+
+  template<typename LinkedListType>
+    class LinkedList : public List<LinkedListType, LinkedListIterator<LinkedListType>>
+    {
+      friend class LinkedListIterator<LinkedListType> ;
     public:
       LinkedList ()
       {
@@ -39,13 +91,16 @@ namespace ticher777
       {
 	return listSize;
       }
-    protected:
-      struct LinkedNode
+      ;
+
+      virtual LinkedListIterator<LinkedListType>
+      iterator () const override
       {
-	LinkedListType value;
-	LinkedNode *next;
-	LinkedNode *prev;
-      };
+	LinkedListIterator<LinkedListType> iterator (head);
+	return iterator;
+      }
+      ;
+    protected:
 
       LinkedListType
       doGet (int index) const override
@@ -56,7 +111,7 @@ namespace ticher777
       void
       doAdd (int index, LinkedListType value) override
       {
-	LinkedNode *newNode = new LinkedNode;
+	LinkedNode<LinkedListType> *newNode = new LinkedNode<LinkedListType>;
 	newNode->value = value;
 
 	if (index == 0)
@@ -89,7 +144,7 @@ namespace ticher777
 	  }
 	else
 	  {
-	    LinkedNode *currentNode = doGetNode (index);
+	    LinkedNode<LinkedListType> *currentNode = doGetNode (index);
 	    linkNodes (currentNode->prev, newNode);
 	    linkNodes (newNode, currentNode);
 	  }
@@ -111,7 +166,7 @@ namespace ticher777
 	      }
 	    else
 	      {
-		LinkedNode *newHead = head->next;
+		LinkedNode<LinkedListType> *newHead = head->next;
 		linkNodes (head->prev, head->next);
 		delete head;
 		head = newHead;
@@ -121,7 +176,7 @@ namespace ticher777
 	  {
 	    result = tail->value;
 
-	    LinkedNode *newTail = tail->prev;
+	    LinkedNode<LinkedListType> *newTail = tail->prev;
 	    linkNodes (tail->prev, tail->next);
 
 	    delete tail;
@@ -130,7 +185,7 @@ namespace ticher777
 	  }
 	else
 	  {
-	    LinkedNode *currentNode = doGetNode (index);
+	    LinkedNode<LinkedListType> *currentNode = doGetNode (index);
 	    result = currentNode->value;
 	    linkNodes (currentNode->prev, currentNode->next);
 
@@ -142,11 +197,11 @@ namespace ticher777
 	return result;
       }
 
-      LinkedNode*
+      LinkedNode<LinkedListType>*
       doGetNode (int index) const
       {
 	int currentIndex = 0;
-	LinkedNode *currentNode = head;
+	LinkedNode<LinkedListType> *currentNode = head;
 	while (currentIndex != index)
 	  {
 	    currentIndex++;
@@ -156,7 +211,7 @@ namespace ticher777
       }
 
       void
-      linkNodes (LinkedNode* prev, LinkedNode* next) const
+      linkNodes (LinkedNode<LinkedListType>* prev, LinkedNode<LinkedListType>* next) const
       {
 	if (prev != nullptr)
 	  {
@@ -170,8 +225,8 @@ namespace ticher777
       ;
     private:
 
-      LinkedNode *head;
-      LinkedNode *tail;
+      LinkedNode<LinkedListType> *head;
+      LinkedNode<LinkedListType> *tail;
       int listSize;
     };
 
