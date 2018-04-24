@@ -36,7 +36,8 @@ TEST_CASE( "LinkedList#add" , "[LinkedList]")
   SECTION( "Check bound indexes for 'add' method" ){
   REQUIRE_THROWS_WITH(list.add(10, -1), "Index 10 is out of range for 'add' operation. Valid range: [0, 0]");
   list.add(11);
-  REQUIRE_THROWS_WITH(list.add(-1, 20), "Index -1 is out of range for 'add' operation. Valid range: [0, 1]");
+
+  REQUIRE_THROWS_WITH(list.add(-1, 20), "Index 4294967295 is out of range for 'add' operation. Valid range: [0, 1]");
 }
 
   SECTION( "Check adding random values to list"){
@@ -77,7 +78,7 @@ TEST_CASE( "LinkedList#get" , "[LinkedList]")
     }
   list.get(0);
   list.get(listSize - 1);
-  REQUIRE_THROWS_WITH(list.get(-1), "Index -1 is out of range for 'get' operation. Valid range: [0, 199]");
+  REQUIRE_THROWS_WITH(list.get(-1), "Index 4294967295 is out of range for 'get' operation. Valid range: [0, 199]");
 }
 }
 
@@ -128,7 +129,7 @@ TEST_CASE( "LinkedList#remove" , "[LinkedList]" )
   list.remove(list.size() - 1);
   REQUIRE(list.size() == listSize - 2);
 
-  REQUIRE_THROWS_WITH(list.remove(-1), "Index -1 is out of range for 'remove' operation. Valid range: [0, 197]");
+  REQUIRE_THROWS_WITH(list.remove(-1), "Index 4294967295 is out of range for 'remove' operation. Valid range: [0, 197]");
   REQUIRE_THROWS_WITH(list.remove(list.size()), "Index 198 is out of range for 'remove' operation. Valid range: [0, 197]");
   REQUIRE_THROWS_WITH(list.remove(1000), "Index 1000 is out of range for 'remove' operation. Valid range: [0, 197]");
 }

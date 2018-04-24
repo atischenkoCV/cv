@@ -86,7 +86,7 @@ namespace ticher777
       }
       ;
 
-      virtual int
+      virtual unsigned
       size () const override
       {
 	return listSize;
@@ -103,13 +103,13 @@ namespace ticher777
     protected:
 
       LinkedListType
-      doGet (int index) const override
+      doGet (unsigned int index) const override
       {
 	return doGetNode (index)->value;
       }
 
       void
-      doAdd (int index, LinkedListType value) override
+      doAdd (unsigned int index, LinkedListType value) override
       {
 	LinkedNode<LinkedListType> *newNode = new LinkedNode<LinkedListType>;
 	newNode->value = value;
@@ -153,7 +153,7 @@ namespace ticher777
       }
 
       LinkedListType
-      doRemove (int index) override
+      doRemove (unsigned int index) override
       {
 	LinkedListType result;
 	if (index == 0)
@@ -227,7 +227,7 @@ namespace ticher777
 
       LinkedNode<LinkedListType> *head;
       LinkedNode<LinkedListType> *tail;
-      int listSize;
+      unsigned listSize;
     };
 
 } /* namespace ticher777 */
