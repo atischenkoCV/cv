@@ -64,6 +64,25 @@ namespace ticher777
       LinkedNode<LinkedListIteratorType>* iteratorHead;
     };
 
+   /**
+    * LinkedList implementation of List. It's based on LinkedNode to store values.
+    *
+    * The best practice to use this list is:
+    * 1) You need to add element to begin and end of list
+    * 2) You don't need random access to elements
+    * 3) If you need walk through element then use #iterator
+    *
+    * example:
+    * ticher777::LinkedList<int> list;
+    * list.add(11);
+    * list.add(16);
+    *
+    * ticher777::LinkedListIterator<int> iterator = list.iterator();
+    *
+    * while(iterator.hasNext()) {
+    * 	std::cout << iterator.next() << " ";
+    * }
+    */
   template<typename LinkedListType>
     class LinkedList : public List<LinkedListType, LinkedListIterator<LinkedListType>>
     {
