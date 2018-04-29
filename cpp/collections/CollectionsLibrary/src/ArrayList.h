@@ -17,22 +17,31 @@ namespace ticher777
     class ArrayListIterator : public Iterator<ArrayListIteratorType>
     {
     public:
+      ArrayListIterator(ArrayListIteratorType *array, int size) : array(array), maxIndex(size - 1) {
+	currentIndex = -1;
+      }
+
+      ~ArrayListIterator() {
+	array = nullptr;
+      }
 
       virtual bool
       hasNext () const override
       {
-	//TODO[T7]: will be implement later
-	return false;
+	return array != nullptr && currentIndex < maxIndex;
       }
       ;
 
       virtual ArrayListIteratorType
       next () override
       {
-	//TODO[T7]: will be implement later
-	return 0;
+	return array[++currentIndex];
       }
       ;
+    private :
+      ArrayListIteratorType* array;
+      unsigned int maxIndex;
+      unsigned int currentIndex;
     };
 
   /**
