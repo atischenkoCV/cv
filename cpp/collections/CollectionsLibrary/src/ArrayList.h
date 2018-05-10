@@ -19,7 +19,7 @@ public:
 			array(array), size(size) {
 	}
 
-	~ArrayListIterator() {
+	virtual ~ArrayListIterator() {
 		array = nullptr;
 	}
 
