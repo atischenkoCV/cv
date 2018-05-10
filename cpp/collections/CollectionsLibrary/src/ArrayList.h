@@ -71,11 +71,13 @@ public:
 		size = 0;
 		length = 0;
 	}
-	;
+
+	virtual ~ArrayList() = default;
+
 	unsigned int getLength() {
 		return 0;
 	}
-	;
+
 	virtual ArrayListIterator<ArrayListType>
 	iterator() const = 0;
 protected:
