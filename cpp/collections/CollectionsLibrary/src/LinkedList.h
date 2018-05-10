@@ -35,7 +35,7 @@ public:
 		currentPosition = iteratorHead;
 	}
 	;
-	~LinkedListIterator() {
+	virtual ~LinkedListIterator() {
 		currentPosition = nullptr;
 	}
 	virtual bool hasNext() const override
