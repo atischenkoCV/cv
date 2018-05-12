@@ -69,6 +69,8 @@ private:
 template<typename ArrayListType>
 class ArrayList: public List<ArrayListType, ArrayListIterator<ArrayListType>> {
 public:
+	ArrayList() : ArrayList(10) {}
+
 	ArrayList(const unsigned int initLenght) {
 		m_array = new ArrayListType[initLenght];
 		m_size = 0;
@@ -122,6 +124,7 @@ protected:
 		for (unsigned int i = index; i < m_size - 1; i++) {
 			m_array[i] = m_array[i + 1];
 		}
+		m_size--;
 		return result;
 	}
 
