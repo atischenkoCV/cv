@@ -65,3 +65,91 @@ TEST_CASE( "ArrayList#add" , "[ArrayList]") {
 		REQUIRE(list.size() == 200);
 	}
 }
+
+TEST_CASE( "ArrayList#get" , "[ArrayList]") {
+	ticher777::ArrayList<double> list;
+	REQUIRE(list.size() == 0);
+
+	SECTION( "Check getting for a random index"){
+	srand (time(nullptr));
+	int listSize = 200;
+
+	for (int i = 0; i < listSize; i++)
+	{
+		list.add(i);
+	}
+	for (int i = 0; i < listSize; i++)
+	{
+		list.get(rand() % listSize);
+	}
+
+}
+	SECTION( "Check bound indexes for 'get' method"){
+	int listSize = 200;
+	for (int i = 0; i < listSize; i++)
+	{
+		list.add(i);
+	}
+	list.get(0);
+	list.get(listSize - 1);
+	REQUIRE_THROWS_WITH(list.get(-1), "Index 4294967295 is out of range for 'get' operation. Valid range: [0, 199]");
+}
+}
+
+TEST_CASE( "ArrayList#remove" , "[ArrayList]" ) {
+	ticher777::ArrayList<int> list;
+	REQUIRE(list.size() == 0);
+
+	SECTION( "Check removing the last element in the list" ){
+	int listSize = 200;
+
+	for (int i = 0; i < listSize; i++)
+	{
+		list.add(i);
+	}
+	for (int i = 0; i < listSize; i++)
+	{
+		list.remove(list.size() - 1);
+	}
+
+	REQUIRE(list.size() == 0);
+
+}
+	SECTION( "Check removing the first element in the list" ){
+	int listSize = 200;
+
+	for (int i = 0; i < listSize; i++)
+	{
+		list.add(i);
+	}
+	for (int i = 0; i < listSize; i++)
+	{
+		list.remove(0);
+	}
+
+	REQUIRE(list.size() == 0);
+}
+
+	SECTION( "Check bound indexes for remove method" ){
+	int listSize = 200;
+	for (int i = 0; i < listSize; i++)
+	{
+		list.add(i);
+	}
+	list.remove(0);
+	REQUIRE(list.size() == listSize - 1);
+
+	list.remove(list.size() - 1);
+	REQUIRE(list.size() == listSize - 2);
+
+	REQUIRE_THROWS_WITH(list.remove(-1), "Index 4294967295 is out of range for 'remove' operation. Valid range: [0, 197]");
+	REQUIRE_THROWS_WITH(list.remove(list.size()), "Index 198 is out of range for 'remove' operation. Valid range: [0, 197]");
+	REQUIRE_THROWS_WITH(list.remove(1000), "Index 1000 is out of range for 'remove' operation. Valid range: [0, 197]");
+}
+
+	SECTION( "Check return value of 'remove' method" ){
+	int listValue = 222888;
+	list.add(listValue);
+	REQUIRE(list.remove(0) == listValue);
+}
+}
